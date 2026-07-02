@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game - Main Menu</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+  <section id="main-menu-screen">
+    <div class="main-menu-shell">
+      <h1>Jeopardy Game</h1>
+      <p class="main-menu-subtitle">Choose what you want to do.</p>
+
+      <div class="main-menu-grid">
+        <button class="main-menu-card" onclick="goToPlayBoard()">
+          <span>Play Board</span>
+          <small>Start playing with the current board.</small>
+        </button>
+
+        <button class="main-menu-card" onclick="goToEditBoard()">
+          <span>Edit Board</span>
+          <small>Edit questions, answers, categories, rows, columns, Daily Doubles, and media.</small>
+        </button>
+
+        <button class="main-menu-card" onclick="document.getElementById('saved-boards-screen').scrollIntoView({ behavior: 'smooth' })">
+          <span>Saved Boards</span>
+          <small>Load, download, or delete boards saved in this browser.</small>
+        </button>
+
+        <button class="main-menu-card" onclick="document.getElementById('complete-boards-screen').scrollIntoView({ behavior: 'smooth' })">
+          <span>Complete Boards & Bundles</span>
+          <small>Load ready-made complete boards or board bundles.</small>
+        </button>
+
+        <button class="main-menu-card" onclick="openOptionsPopup()">
+          <span>Settings</span>
+          <small>Save, upload, download, reset, and manage the current board.</small>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="saved-boards-screen">
+    <div class="screen-page-shell">
+      <h2>Saved Boards</h2>
+
+      <div class="saved-board-actions">
+        <button onclick="saveCurrentBoardToWebsite()">Save Current Board</button>
+        <button onclick="downloadGameInfo()">Download Current Board TXT</button>
+
+        <label class="saved-board-upload-button">
+          Upload Board TXT
+          <input
+            type="file"
+            accept=".txt,application/json,text/plain"
+            onchange="uploadBoardTxt(this.files[0], 'play.html'); this.value = ''"
+          >
+        </label>
+      </div>
+
+      <div id="saved-boards-list"></div>
+    </div>
+  </section>
+
+  <section id="complete-boards-screen">
+    <div class="screen-page-shell">
+      <h2>Complete Boards & Board Bundles</h2>
+      <p class="page-description">Load a ready-made board or a blank template. More bundles can be added later in the code.</p>
+      <div id="complete-boards-list" class="complete-boards-grid"></div>
+    </div>
+  </section>
+
+  <div id="options-popup" class="hidden">
+    <div class="options-window">
+      <div class="options-topbar">
+        <h2>Settings</h2>
+        <button onclick="closeOptionsPopup()">Close</button>
+      </div>
+
+      <div class="options-grid">
+        <button onclick="saveCurrentBoardToWebsite()">Save Board In Website</button>
+        <button onclick="downloadGameInfo()">Download Board TXT</button>
+        <button onclick="resetAnsweredBoxes()">Reset Answered Boxes</button>
+        <button onclick="resetTeamScores()">Reset Team Scores</button>
+        <button onclick="resetTeamsToDefault()">Reset Teams To 5</button>
+
+        <label class="options-upload-button">
+          Upload Board TXT
+          <input
+            type="file"
+            accept=".txt,application/json,text/plain"
+            onchange="uploadBoardTxt(this.files[0], 'play.html'); this.value = ''; closeOptionsPopup();"
+          >
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/core.js"></script>
+  <script src="js/menu.js"></script>
+</body>
+</html>

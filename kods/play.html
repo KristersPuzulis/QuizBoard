@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game - Play Board</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/play.css">
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu" title="Menu">☰</button>
+
+  <div id="menu-panel" class="menu-panel">
+    <div class="menu-panel-title">Jeopardy Menu</div>
+    <button onclick="goToMainMenu()">Main Menu</button>
+    <button onclick="goToPlayBoard()">Play Board</button>
+    <button onclick="goToEditBoard()">Edit Board</button>
+    <button onclick="goToSavedBoards()">Saved Boards</button>
+    <button onclick="goToCompleteBoards()">Complete Boards & Bundles</button>
+    <button onclick="openOptionsPopup()">Settings</button>
+  </div>
+
+  <main class="game">
+    <div id="play-categories" class="categories"></div>
+    <div id="play-board" class="board"></div>
+
+    <div class="bottom-area">
+      <div class="scoreboard-row">
+        <div id="main-scoreboard" class="scoreboard"></div>
+
+        <div class="team-count-controls">
+          <button onclick="addTeam()">+</button>
+          <button onclick="removeTeam()">-</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="options-popup" class="hidden">
+    <div class="options-window">
+      <div class="options-topbar">
+        <h2>Settings</h2>
+        <button onclick="closeOptionsPopup()">Close</button>
+      </div>
+
+      <div class="options-grid">
+        <button onclick="saveCurrentBoardToWebsite()">Save Board In Website</button>
+        <button onclick="downloadGameInfo()">Download Board TXT</button>
+        <button onclick="resetAnsweredBoxes()">Reset Answered Boxes</button>
+        <button onclick="resetTeamScores()">Reset Team Scores</button>
+        <button onclick="resetTeamsToDefault()">Reset Teams To 5</button>
+
+        <label class="options-upload-button">
+          Upload Board TXT
+          <input
+            type="file"
+            accept=".txt,application/json,text/plain"
+            onchange="uploadBoardTxt(this.files[0], 'play.html'); this.value = ''; closeOptionsPopup();"
+          >
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="question-modal" class="hidden">
+    <div id="modal-scoreboard" class="scoreboard modal-scoreboard"></div>
+    <div id="daily-double-popup" class="hidden">Daily Double</div>
+
+    <div id="question-content">
+      <div id="question-topbar">
+        <button onclick="closeQuestion()">Close</button>
+        <div id="question-title">Question</div>
+        <button onclick="revealAnswer()">Reveal Answer</button>
+      </div>
+
+      <div id="question-main">
+        <p id="question-text"></p>
+      </div>
+
+      <div id="question-media"></div>
+
+      <div id="answer-reveal" class="hidden">
+        <p id="answer-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/core.js"></script>
+  <script src="js/play.js"></script>
+</body>
+</html>

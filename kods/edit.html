@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game - Edit Board</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/edit.css">
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu" title="Menu">☰</button>
+
+  <div id="menu-panel" class="menu-panel">
+    <div class="menu-panel-title">Jeopardy Menu</div>
+    <button onclick="goToMainMenu()">Main Menu</button>
+    <button onclick="goToPlayBoard()">Play Board</button>
+    <button onclick="goToEditBoard()">Edit Board</button>
+    <button onclick="goToSavedBoards()">Saved Boards</button>
+    <button onclick="goToCompleteBoards()">Complete Boards & Bundles</button>
+    <button onclick="openOptionsPopup()">Settings</button>
+  </div>
+
+  <section id="edit-screen">
+    <div class="edit-board-shell">
+      <div class="edit-screen-header">
+        <h2>Edit Questions</h2>
+        <p>Click a box to edit the question, answer, Daily Double, and media. Hover over a box to preview the answer.</p>
+
+        <div class="board-size-controls">
+          <div class="board-size-control-group">
+            <span>Columns:</span>
+            <button onclick="removeColumn()">-</button>
+            <strong id="column-count-label">5</strong>
+            <button onclick="addColumn()">+</button>
+          </div>
+
+          <div class="board-size-control-group">
+            <span>Rows:</span>
+            <button onclick="removeRow()">-</button>
+            <strong id="row-count-label">5</strong>
+            <button onclick="addRow()">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="editor"></div>
+    </div>
+  </section>
+
+  <div id="options-popup" class="hidden">
+    <div class="options-window">
+      <div class="options-topbar">
+        <h2>Settings</h2>
+        <button onclick="closeOptionsPopup()">Close</button>
+      </div>
+
+      <div class="options-grid">
+        <button onclick="saveCurrentBoardToWebsite()">Save Board In Website</button>
+        <button onclick="downloadGameInfo()">Download Board TXT</button>
+        <button onclick="resetAnsweredBoxes()">Reset Answered Boxes</button>
+        <button onclick="resetTeamScores()">Reset Team Scores</button>
+        <button onclick="resetTeamsToDefault()">Reset Teams To 5</button>
+
+        <label class="options-upload-button">
+          Upload Board TXT
+          <input
+            type="file"
+            accept=".txt,application/json,text/plain"
+            onchange="uploadBoardTxt(this.files[0], 'edit.html'); this.value = ''; closeOptionsPopup();"
+          >
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="edit-question-modal" class="hidden">
+    <div class="edit-modal-window">
+      <div class="edit-modal-topbar">
+        <div id="edit-modal-title">Edit Question</div>
+        <button onclick="closeEditQuestionEditor(false)">Close without Saving [ESC]</button>
+      </div>
+
+      <div class="edit-modal-content">
+        <div class="edit-modal-column">
+          <label>Question Prompt</label>
+          <textarea id="edit-modal-question" placeholder="Enter question text"></textarea>
+          <p class="edit-modal-help">This is what appears on the board.</p>
+        </div>
+
+        <div class="edit-modal-column">
+          <label>Correct Response</label>
+          <textarea id="edit-modal-answer" placeholder="Enter answer text"></textarea>
+          <p class="edit-modal-help">This appears when you hover over the edit-board box.</p>
+        </div>
+      </div>
+
+      <div class="edit-modal-options">
+        <label class="daily-double-row edit-modal-daily-double">
+          <input id="edit-modal-daily-double" type="checkbox">
+          Daily Double
+        </label>
+
+        <div class="edit-modal-media-area">
+          <span>Question media:</span>
+
+          <div class="icon-media-buttons">
+            <label class="icon-upload-button" title="Add image">
+              🖼
+              <input type="file" accept="image/*" onchange="uploadEditModalMedia(this.files[0]); this.value = ''">
+            </label>
+
+            <label class="icon-upload-button" title="Add audio">
+              🔊
+              <input type="file" accept="audio/*" onchange="uploadEditModalMedia(this.files[0]); this.value = ''">
+            </label>
+
+            <label class="icon-upload-button" title="Add video">
+              ▶
+              <input type="file" accept="video/*" onchange="uploadEditModalMedia(this.files[0]); this.value = ''">
+            </label>
+          </div>
+
+          <div class="media-preview-row">
+            <div class="media-preview" id="edit-modal-media-preview">No question media.</div>
+            <button id="edit-modal-remove-media" class="remove-media-button hidden" onclick="removeEditModalMedia()">Remove media</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-modal-actions">
+        <button onclick="closeEditQuestionEditor(true)">Save and Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/core.js"></script>
+  <script src="js/edit.js"></script>
+</body>
+</html>

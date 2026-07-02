@@ -1,0 +1,416 @@
+/* PLAY SCREEN */
+
+.game {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 72px 1fr 105px;
+}
+
+.categories {
+  --cols: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  align-items: center;
+  text-align: center;
+  font-size: clamp(17px, 1.75vw, 32px);
+}
+
+.categories div {
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 10px;
+  line-height: 1.05;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.board {
+  --cols: 5;
+  --rows: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  padding: 0 14px;
+}
+
+.cell {
+  background: var(--blue);
+  color: white;
+  border: 3px solid black;
+  font-size: clamp(24px, 2.1vw, 42px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  overflow: hidden;
+}
+
+.cell:hover {
+  border-color: var(--yellow);
+  transform: scale(1.01);
+}
+
+.cell.answered {
+  background: #aaaaaa;
+  color: #cccccc;
+}
+
+.bottom-area {
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 6px 70px 0 90px;
+  overflow: hidden;
+}
+
+.scoreboard-row {
+  width: 100%;
+  max-width: 1650px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(4px, 0.8vw, 18px);
+  flex: 1;
+  min-width: 0;
+}
+
+.team {
+  flex: 1 1 0;
+  min-width: 58px;
+  max-width: 115px;
+  background: white;
+  color: black;
+  text-align: center;
+  border: 3px solid white;
+}
+
+.team-name {
+  width: 100%;
+  height: 30px;
+  border: none;
+  text-align: center;
+  font-size: clamp(11px, 1.3vw, 21px);
+  font-weight: bold;
+  padding: 2px;
+}
+
+.score {
+  width: 100%;
+  height: 34px;
+  border: none;
+  background: var(--blue);
+  color: white;
+  font-size: clamp(16px, 1.6vw, 24px);
+  font-weight: bold;
+  text-align: center;
+  padding: 2px;
+}
+
+.team-name:focus,
+.score:focus {
+  outline: 2px solid var(--yellow);
+}
+
+.team-controls {
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 1.5vw, 26px);
+  background: white;
+}
+
+.team-controls button {
+  background: white;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 22px;
+}
+
+.team-controls button:first-child,
+.team-count-controls button:first-child {
+  color: #19aa42;
+}
+
+.team-controls button:last-child,
+.team-count-controls button:last-child {
+  color: red;
+}
+
+.team-count-controls {
+  width: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.team-count-controls button {
+  height: 34px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.team-count-controls button:hover {
+  transform: scale(1.15);
+}
+
+/* QUESTION FULLSCREEN */
+
+.modal-scoreboard {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  width: min(92vw, 1500px);
+}
+
+#question-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--blue);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+#question-content {
+  width: 100vw;
+  height: 100vh;
+  background: var(--blue);
+  color: white;
+  padding: 0;
+  text-align: center;
+  border-radius: 0;
+  display: grid;
+  grid-template-rows: 50px 1fr 1fr;
+}
+
+#question-content.has-media {
+  grid-template-rows: 50px 1fr 1fr 1fr;
+}
+
+#question-topbar {
+  height: 50px;
+  background: #171d56;
+  display: grid;
+  grid-template-columns: 160px 1fr 160px;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 20px;
+}
+
+#question-title {
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+#question-topbar button {
+  background: #cccccc;
+  color: #555555;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#question-topbar button:hover {
+  background: #bbbbbb;
+}
+
+#question-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  overflow: hidden;
+}
+
+#question-text {
+  font-size: clamp(42px, 5vw, 86px);
+  font-weight: normal;
+  line-height: 1.15;
+  max-width: 90%;
+  color: white;
+}
+
+#question-media {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 40px;
+  overflow: hidden;
+}
+
+#question-content.has-media #question-media {
+  display: flex;
+}
+
+.modal-media {
+  max-width: 90%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#answer-reveal {
+  width: 80%;
+  height: calc(100% - 20px);
+  margin: 10px auto;
+  padding: 20px;
+  border: 3px solid var(--yellow);
+  background: rgba(0, 0, 0, 0.18);
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#answer-reveal.hidden {
+  display: none !important;
+}
+
+#answer-text {
+  font-size: clamp(34px, 4vw, 64px);
+  font-weight: bold;
+  color: white;
+}
+
+#daily-double-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--yellow);
+  font-size: clamp(60px, 9vw, 150px);
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.daily-double-animate {
+  animation: dailyDoublePop 3s ease forwards;
+}
+
+@keyframes dailyDoublePop {
+  0% { opacity: 0; transform: scale(0.7); }
+  15% { opacity: 1; transform: scale(1.08); }
+  35% { transform: scale(1); }
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+@media (max-height: 780px) {
+  .game {
+    grid-template-rows: 62px 1fr 105px;
+  }
+
+  .categories,
+  .categories div {
+    height: 62px;
+  }
+
+  .categories {
+    font-size: clamp(15px, 1.55vw, 30px);
+  }
+
+  .bottom-area {
+    padding-left: 95px;
+    padding-right: 58px;
+  }
+
+  .team {
+    min-width: 54px;
+    max-width: 105px;
+  }
+
+  .team-name {
+    height: 27px;
+    font-size: clamp(10px, 1.1vw, 18px);
+  }
+
+  .score {
+    height: 31px;
+    font-size: clamp(15px, 1.4vw, 22px);
+  }
+
+  .team-controls {
+    height: 23px;
+  }
+
+  .team-controls button {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  #edit-screen {
+    padding-top: 10px;
+  }
+
+  .edit-screen-header h2 {
+    font-size: clamp(28px, 3.2vw, 44px);
+  }
+
+  .edit-screen-header p {
+    font-size: 13px;
+  }
+
+  .board-size-controls {
+    margin-top: 6px;
+  }
+
+  .edit-board-wrapper {
+    grid-template-rows: 42px 1fr;
+  }
+
+  .edit-category-input {
+    height: 42px;
+  }
+}
+
+@media (max-width: 800px) {
+  .edit-modal-content,
+  .edit-modal-options {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-board-cell {
+    padding: 6px;
+  }
+
+  #question-topbar {
+    grid-template-columns: 110px 1fr 120px;
+    font-size: 16px;
+  }
+
+  #question-topbar button {
+    font-size: 13px;
+    padding: 7px 8px;
+  }
+}

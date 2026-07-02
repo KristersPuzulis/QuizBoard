@@ -1,0 +1,487 @@
+/* EDIT SCREEN */
+
+#edit-screen {
+  height: 100vh;
+  padding: 18px 34px 20px;
+  overflow: hidden;
+  background: var(--blue);
+}
+
+.edit-board-shell {
+  width: min(1800px, 96vw);
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+}
+
+.edit-screen-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.edit-screen-header h2 {
+  margin: 0 0 5px;
+  font-size: clamp(30px, 4vw, 56px);
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.edit-screen-header p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 16px;
+}
+
+.board-size-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.board-size-control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 5px 10px;
+}
+
+.board-size-control-group span,
+.board-size-control-group strong {
+  font-size: 16px;
+  color: white;
+}
+
+.board-size-control-group button {
+  width: 30px;
+  height: 28px;
+  border: none;
+  background: #cccccc;
+  color: #555555;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.board-size-control-group button:hover {
+  background: #bbbbbb;
+}
+
+#editor {
+  min-height: 0;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.edit-board-wrapper {
+  --cols: 5;
+  --rows: 5;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  min-height: 0;
+}
+
+.edit-category-row {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 0;
+  min-height: 0;
+}
+
+.edit-category-input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: clamp(12px, calc(2.2vw - (var(--cols) * 0.08vw)), 28px);
+  font-weight: bold;
+  padding: 4px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit-category-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.edit-category-input:focus {
+  outline: 3px solid var(--yellow);
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.edit-board-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  border-top: 3px solid black;
+  border-left: 3px solid black;
+  min-height: 0;
+}
+
+.edit-board-cell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+  padding: 8px 10px;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: clamp(10px, calc(2vw - (var(--cols) * 0.08vw) - (var(--rows) * 0.05vw)), 28px);
+  font-weight: bold;
+  line-height: 1.12;
+  transition: outline 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.edit-board-cell.long-text {
+  font-size: clamp(9px, calc(1.45vw - (var(--cols) * 0.04vw)), 22px);
+}
+
+.edit-board-cell.very-long-text {
+  font-size: clamp(8px, calc(1.15vw - (var(--cols) * 0.03vw)), 17px);
+  line-height: 1.05;
+}
+
+.edit-board-cell:hover {
+  outline: 4px solid var(--yellow);
+  outline-offset: -4px;
+  transform: scale(1.01);
+  z-index: 2;
+}
+
+.edit-board-cell.answered {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.edit-cell-question,
+.edit-cell-answer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.edit-cell-answer {
+  display: none;
+  color: var(--yellow);
+}
+
+.edit-board-cell:hover .edit-cell-question {
+  display: none;
+}
+
+.edit-board-cell:hover .edit-cell-answer {
+  display: flex;
+}
+
+.edit-cell-badge {
+  position: absolute;
+  top: 5px;
+  background: var(--yellow);
+  color: black;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.daily-double-badge {
+  left: 5px;
+}
+
+.media-badge {
+  right: 5px;
+}
+
+/* EDIT QUESTION POPUP */
+
+#edit-question-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0.55);
+  color: #222222;
+  padding-top: 34px;
+}
+
+.edit-modal-window {
+  width: min(1100px, 96vw);
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
+  background: #eeeeee;
+  border: 2px solid #555555;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+.edit-modal-topbar {
+  min-height: 34px;
+  background: #9f9f9f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 6px 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.edit-modal-topbar button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.edit-modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  padding: 22px;
+}
+
+.edit-modal-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-modal-column label {
+  font-size: 24px;
+  color: #222222;
+}
+
+.edit-modal-column textarea {
+  width: 100%;
+  min-height: 235px;
+  resize: vertical;
+  border: 1px solid #cfcfcf;
+  border-radius: 3px;
+  background: white;
+  color: #222222;
+  font-size: 20px;
+  line-height: 1.35;
+  padding: 12px 14px;
+}
+
+.edit-modal-column textarea:focus {
+  outline: 3px solid var(--yellow);
+}
+
+.edit-modal-help {
+  margin: 0;
+  color: #333333;
+  font-size: 16px;
+}
+
+.edit-modal-options {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  padding: 0 22px 18px;
+  align-items: start;
+}
+
+.edit-modal-daily-double {
+  color: #222222;
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 8px;
+}
+
+.edit-modal-media-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #222222;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.media-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.media-preview {
+  font-size: 13px;
+  color: #333333;
+  min-height: 18px;
+}
+
+.icon-media-buttons {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 4px;
+}
+
+.icon-upload-button {
+  width: 36px;
+  height: 36px;
+  background: white;
+  color: black;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.icon-upload-button input {
+  display: none;
+}
+
+.icon-upload-button:hover {
+  outline: 2px solid var(--yellow);
+}
+
+.remove-media-button {
+  width: fit-content;
+  background: #cccccc;
+  color: #555555;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.remove-media-button:hover {
+  background: #bbbbbb;
+}
+
+.edit-modal-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0 22px 24px;
+}
+
+.edit-modal-actions button {
+  background: #eeeeee;
+  color: #222222;
+  border: 2px solid #222222;
+  padding: 7px 14px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.edit-modal-actions button:hover {
+  background: #dddddd;
+}
+
+@media (max-height: 780px) {
+  .game {
+    grid-template-rows: 62px 1fr 105px;
+  }
+
+  .categories,
+  .categories div {
+    height: 62px;
+  }
+
+  .categories {
+    font-size: clamp(15px, 1.55vw, 30px);
+  }
+
+  .bottom-area {
+    padding-left: 95px;
+    padding-right: 58px;
+  }
+
+  .team {
+    min-width: 54px;
+    max-width: 105px;
+  }
+
+  .team-name {
+    height: 27px;
+    font-size: clamp(10px, 1.1vw, 18px);
+  }
+
+  .score {
+    height: 31px;
+    font-size: clamp(15px, 1.4vw, 22px);
+  }
+
+  .team-controls {
+    height: 23px;
+  }
+
+  .team-controls button {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  #edit-screen {
+    padding-top: 10px;
+  }
+
+  .edit-screen-header h2 {
+    font-size: clamp(28px, 3.2vw, 44px);
+  }
+
+  .edit-screen-header p {
+    font-size: 13px;
+  }
+
+  .board-size-controls {
+    margin-top: 6px;
+  }
+
+  .edit-board-wrapper {
+    grid-template-rows: 42px 1fr;
+  }
+
+  .edit-category-input {
+    height: 42px;
+  }
+}
+
+@media (max-width: 800px) {
+  .edit-modal-content,
+  .edit-modal-options {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-board-cell {
+    padding: 6px;
+  }
+
+  #question-topbar {
+    grid-template-columns: 110px 1fr 120px;
+    font-size: 16px;
+  }
+
+  #question-topbar button {
+    font-size: 13px;
+    padding: 7px 8px;
+  }
+}
